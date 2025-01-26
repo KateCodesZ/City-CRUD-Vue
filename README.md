@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cefd001fee36405cb728dc76235a464b)](https://app.codacy.com/gh/KateCodesZ/City-CRUD-Vue?utm_source=github.com&utm_medium=referral&utm_content=KateCodesZ/City-CRUD-Vue&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f8868b700be34030ad2d402f1dafc7f6)](https://app.codacy.com/gh/KateCodesZ/City-CRUD-Vue/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # Cities Manager
