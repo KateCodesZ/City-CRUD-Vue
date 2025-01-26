@@ -22,9 +22,12 @@ Vue.createApp({
         const response = await fetch('https://avancera.app/cities/');
         const data = await response.json();
         this.cities = data.map(city => ({
-          ...city,
+          id: city.id || null,
+          name: city.name || '',
+          population: city.population || 0,
           isEditing: false
-        }));
+        }))
+        .filter(city => city.id && city.name);
       } catch {
         this.error = 'Failed to load cities';
       }
@@ -70,6 +73,12 @@ Vue.createApp({
         return;
       }
 
+      if (typeof city.name !== 'string' || isNaN(Number(city.population))) {
+        console.error('Invalid city data:', city);
+        this.error = 'Invalid city data';
+        return;
+      }
+
       try {
         const response = await fetch(`https://avancera.app/cities/${city.id}`, {
           method: 'PUT',
@@ -86,15 +95,16 @@ Vue.createApp({
           throw new Error(errorText);
         }
 
-        const index = this.cities.findIndex(c => c.id === city.id);
-        if (index !== -1) {
-          this.cities[index] = {
-            ...this.cities[index],
-            name: city.name,
-            population: Number(city.population),
-            isEditing: false
-          };
-        }
+         this.cities = this.cities.map(c =>
+          c.id === city.id
+            ? {
+                ...c,
+                name: city.name,
+                population: Number(city.population),
+                isEditing: false
+              }
+            : c
+         );
       } catch (error) {
         console.error('Error updating city:', error.message);
         this.error = 'Failed to update city';
