@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cities Manager</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- Add a new city -->
+    <div class="add-city">
+      <h2>Add New City</h2>
+      <input v-model="newCity.name" placeholder="City Name">
+      <input v-model.number="newCity.population" type="number" placeholder="Population">
+      <button @click="addCity">Add City</button>
+    </div>
+
+    <!-- List of Cities -->
+    <div class="cities-list">
+      <h2>Cities List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Population</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="city in cities" :key="city.id">
+            <td v-if="!city.isEditing">{{ city.name }}</td>
+            <td v-if="!city.isEditing">{{ city.population }}</td>
+            <td v-if="city.isEditing"><input v-model="city.name"></td>
+            <td v-if="city.isEditing"><input v-model.number="city.population" type="number"></td>
+            <td class="actions">
+              <button v-if="!city.isEditing" @click="city.isEditing = true" class="edit">Edit</button>
+              <button v-if="!city.isEditing" @click="deleteCity(city.id)" class="delete">Delete</button>
+              <button v-if="city.isEditing" @click="updateCity(city)" class="save">Save</button>
+              <button v-if="city.isEditing" @click="city.isEditing = false" class="cancel">Cancel</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-if="error" class="error">{{ error }}</p>
+    </div>
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>
